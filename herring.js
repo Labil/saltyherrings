@@ -5,6 +5,7 @@ var Herring = function(xPos, yPos, speed, w, h, canvasW) {
     this.w = w;
     this.h = h;
     this.canvasW = canvasW;
+    this.selected = false;
     this.type = 'Herring';
     //Set initial flipout to 2 so that if the fish is spawned 
     //near the edge it won't flip around and swim the wrong way
@@ -15,13 +16,35 @@ var Herring = function(xPos, yPos, speed, w, h, canvasW) {
     else this.speed = -speed;
 };
 
+Herring.prototype.select = function(){
+    this.selected = true;
+    if(this.speed < 0) this.type = 'Herring_left_sel';
+    else this.type = 'Herring_sel';
+};
+
+Herring.prototype.deselect = function(){
+    this.selected = false;
+    if(this.speed < 0) this.type = 'Herring_left';
+    else this.type = 'Herring';
+};
+
 // draw functions
 Herring.prototype.draw = function(context) {
     this.swim();
-    if(this.speed < 0){
-        this.type = "Herring_left";
+    if(this.selected){
+        if(this.speed < 0){
+            this.type = "Herring_left_sel";
+        }
+        else this.type = "Herring_sel";    
     }
-    else this.type = "Herring";
+    else{
+        if(this.speed < 0){
+            this.type = "Herring_left";
+        }
+        else this.type = "Herring";
+
+    }
+    
     context.drawImage(imageMgr.getImage(this.type), this.xPos, this.yPos, this.w, this.h);
 };
 

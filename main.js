@@ -40,6 +40,7 @@
 //		- Limit spawn points to canvas V
 //		- Add side panel to site for info display and name choice & search
 //		- Scale fishbowl to certain percent of screen, with panel on side
+//		- Make sprite sheet in stead of separate images.
 
 var globalThis; //Lol. TODO: Solve this hack
 var imageMgr = new ImageManager();
@@ -47,6 +48,7 @@ var imageMgr = new ImageManager();
 var Fishbowl = function(){
 	console.log("new fishbowl");
 	this.herrings = [];
+	this.selectedHerring = null;
 	this.setup();
 	globalThis = this;
 };
@@ -56,6 +58,9 @@ Fishbowl.prototype.setup = function(){
 
 	imageMgr.load("assets/salty1.png", "Herring");
 	imageMgr.load("assets/salty2.png", "Herring_left");
+	imageMgr.load("assets/salty1_selected.png", "Herring_sel");
+	imageMgr.load("assets/salty2_selected.png", "Herring_left_sel");
+
 
 	var waitForImagesToLoad = function(){
 		if(!imageMgr.isFinishedLoading()){
@@ -102,9 +107,33 @@ Fishbowl.prototype.start = function(){
 Fishbowl.prototype.setupEventListeners = function(thisref){
 	var margin = 20;
 	window.addEventListener("mousedown", function(evt){
-		if(evt.clientX < thisref.canvas.width-margin && evt.clientX > margin && evt.clientY < thisref.canvas.height-margin && evt.clientY > margin){
-			console.log("Inside canvas click");
-			thisref.addHerring(evt.clientX, evt.clientY);
+		var hit = false;
+		for(var i = 0; i < thisref.herrings.length; i++){
+			var hW = thisref.herrings[i].w;
+			var hH = thisref.herrings[i].h;
+			var hX = thisref.herrings[i].xPos;
+			var hY = thisref.herrings[i].yPos;
+
+			if(evt.clientX > hX && evt.clientX < hX + hW && evt.clientY > hY && evt.clientY < hY + hH){
+				if(thisref.selectedHerring){
+					thisref.selectedHerring.deselect();
+					thisref.selectedHerring = null;
+				}
+				thisref.herrings[i].select();
+				thisref.selectedHerring = thisref.herrings[i];
+				hit = true;
+				break;
+			}
+		}
+		if(hit == false){
+			if(thisref.selectedHerring){
+				thisref.selectedHerring.deselect();
+				thisref.selectedHerring = null;
+			}
+			if(evt.clientX < thisref.canvas.width-margin && evt.clientX > margin && evt.clientY < thisref.canvas.height-margin && evt.clientY > margin){
+				console.log("Inside canvas click");
+				thisref.addHerring(evt.clientX, evt.clientY);
+			}
 		}
 	}, false);
 };
