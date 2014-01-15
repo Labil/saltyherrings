@@ -1,0 +1,4 @@
+saltyherrings
+=============
+
+Fun with javascript
