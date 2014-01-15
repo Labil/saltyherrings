@@ -4,10 +4,15 @@ var Herring = function(xPos, yPos, speed, w, h, canvasW) {
     this.yPos = yPos;
     this.w = w;
     this.h = h;
-    this.speed = speed;
     this.canvasW = canvasW;
     this.type = 'Herring';
-    this.flipTimeout = 0;
+    //Set initial flipout to 2 so that if the fish is spawned 
+    //near the edge it won't flip around and swim the wrong way
+    this.flipTimeout = 2;
+    var halfW = canvasW / 2;
+    //Make the herring swim in the direction there is most space 
+    if(xPos <= halfW) this.speed = speed;
+    else this.speed = -speed;
 };
 
 // draw functions
