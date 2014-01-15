@@ -33,11 +33,10 @@
 
 // SALTY HERRINGS.
 
-//TODO: - Sort herrings array by size of herrings, so the smaller gets drawn first(behind) ?
+//TODO: 
 //      - When click on herring, display name / info (Herring class)
-//		- Random name generator (Herring class)
-// 		- Random quality assignement (Herring class)
-//		- Limit spawn points to canvas V
+//		- Separate fishbowl from main class
+//		- Angular for the app
 //		- Add side panel to site for info display and name choice & search
 //		- Scale fishbowl to certain percent of screen, with panel on side
 //		- Make sprite sheet in stead of separate images.
@@ -117,7 +116,7 @@ Fishbowl.prototype.setupEventListeners = function(thisref){
 			if(evt.clientX > hX && evt.clientX < hX + hW && evt.clientY > hY && evt.clientY < hY + hH){
 				if(thisref.selectedHerring){
 					thisref.selectedHerring.deselect();
-					thisref.selectedHerring = null;
+				//	thisref.selectedHerring = null;
 				}
 				thisref.herrings[i].select();
 				thisref.selectedHerring = thisref.herrings[i];
