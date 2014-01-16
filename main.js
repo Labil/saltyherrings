@@ -14,15 +14,14 @@
 var app = angular.module('app', []);
 
 app.controller('AppCtrl', function(){
+	
 	this.defaultMsg = "Use the search bar to lookup a salty herring by name, or click on the ones swimming around in the tank!";
 	//The info message changes, default set to defaultMsg:
 	this.info = this.defaultMsg;
 	this.searchDefault = "Search for herring";
-});
+	this.name = "Name"; //Make sure valid name can't be "Name"
 
-function PanelCtrl($scope, SearchBox){
-	$scope.searchBox = SearchBox;
-}
+});
 
 var setupRenderContext = function(){
 	var chopOff = 50;
@@ -63,6 +62,7 @@ var setupEventListeners = function(){
 				&& e.clientY < canvas.height-marginY 
 				&& e.clientY > marginY){
 				fishbowl.addHerring(e.clientX - canvasZeroPos, e.clientY);
+				selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
 			}
 		}
 	}, false);
@@ -72,6 +72,8 @@ var selectHerring = function(herring){
 	deselectHerring();
 	selectedHerring = herring;
 	selectedHerring.select();
+	//console.log(info.getElementsByTagName('p'));
+	info.innerHTML = "<p>Hi my property is: " + selectedHerring.property + "</p>"; 
 	//app.info = "Hi my property is: " + selectedHerring.property;
 };
 
@@ -79,30 +81,28 @@ var deselectHerring = function(){
 	if(selectedHerring){
 		selectedHerring.deselect();
 		selectedHerring = null;
+		info.innerHTML = "<p>Use the search bar to lookup a salty herring by name, or click on the ones swimming around in the tank!</p>";
 	}
 };
 
 var setupSidePanel = function(){
-	//panel = document.createElement("div")
-	//Attributes for panel set in "saltystyles.css"
-	//panel.setAttribute("id", "panel");
-	//document.body.appendChild(panel);
 	//Init some variables
-	panelW = getElementAttr("panel", "width");
+	panel = document.getElementById('panel');
+	panelW = getElementAttr(panel, "width");
 	canvasZeroPos = panelW;
+	info = document.getElementById("info");
 };
 
-//elem is string of id, attr is a string attribute
+//elem is a DOM element, attr is a string attribute
 var getElementAttr = function(elem, attr){
-	var elm = document.getElementById(elem);
-	var style = window.getComputedStyle(elm);
+	var style = window.getComputedStyle(elem);
 	var value = style.getPropertyValue(attr);
 	return parseInt(value);
 };
 
 var fishbowl;
 var selectedHerring = null;
-var canvas, context, panel;
+var canvas, context, panel, info;
 //window.innerWidth/Height is the most agreed upon (by the different browsers) 
 //way of getting the actual window size
 var pageW = window.innerWidth;
