@@ -2,13 +2,26 @@
 <html>
 <head>
 	<title>Salty Herrings.</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="http://code.angularjs.org/1.2.8/angular.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="saltystyle.css">
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css">
-</head>
-<body>
 	<script type="text/javascript" src='imageManager.js'></script>
 	<script type="text/javascript" src='herring.js'></script>
 	<script type="text/javascript" src='fishbowl.js'></script>
 	<script type="text/javascript" src='main.js'></script>
+</head>
+<body>
+	<div ng-app="app">
+		<div id="panel" ng-controller="AppCtrl as app">
+			<h1 class="title">Salty Herrings.</h1>
+			<input type="text" ng-model="app.searchDefault">
+			<div id="info">
+				<p>{{app.info}}</p>
+			</div>
+			
+		</div>
+	</div>
 </body>
 </html>
+

@@ -3,15 +3,17 @@
     min-width: 300px;
     width:30%;
     float:left;
-    min-height:500px;
     border:1px solid black;
+    padding-left: 15px;
+    padding-right: 15px;
 }
-
+.title{
+	text-align: center;
+}
 .hide {
     display:none;
 }
 
 .canvas {
     display:inline-block;
-    border: 1px solid red;
 }
