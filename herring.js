@@ -9,11 +9,9 @@ var Herring = function(xPos, yPos, speed, w, h, canvasW) {
     this.type = 'Herring';
 
     var assignProperty = function(){
-        var properties = ['Too salty', 'Happy-go-lucky', 'Good lookin\'', 
-                            'On the sweet side', 'Golddigger', 'Moist'];
-        var range = properties.length;                    
-        var rand = Math.floor(Math.random() * range);
-        console.log("Random index: " + rand);
+        var properties = ['too salty', 'happy-go-lucky', 'good lookin\'', 
+                            'on the sweet side', 'great in bed', 'moist'];
+        var rand = Math.floor(Math.random() * properties.length);
         return properties[rand];
     };
 
@@ -35,6 +33,7 @@ Herring.prototype.select = function(){
     this.selected = true;
     if(this.speed < 0) this.type = 'Herring_left_sel';
     else this.type = 'Herring_sel';
+    console.log("Hi my property is: " + this.property);
 };
 
 Herring.prototype.deselect = function(){

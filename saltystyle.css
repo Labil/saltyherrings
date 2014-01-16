@@ -1,0 +1,17 @@
+#panel {
+    display:inline-block;
+    min-width: 300px;
+    width:30%;
+    float:left;
+    min-height:500px;
+    border:1px solid black;
+}
+
+.hide {
+    display:none;
+}
+
+.canvas {
+    display:inline-block;
+    border: 1px solid red;
+}
