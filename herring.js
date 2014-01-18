@@ -14,7 +14,6 @@ var Herring = function(xPos, yPos, speed, w, h, canvasW) {
         var rand = Math.floor(Math.random() * properties.length);
         return properties[rand];
     };
-
     this.property = assignProperty();
     //Set initial flipout to 2 so that if the fish is spawned 
     //near the edge it won't flip around and swim the wrong way
@@ -33,7 +32,7 @@ Herring.prototype.select = function(){
     this.selected = true;
     if(this.speed < 0) this.type = 'Herring_left_sel';
     else this.type = 'Herring_sel';
-    console.log("Hi my property is: " + this.property);
+    //console.log("Hi my property is: " + this.property);
 };
 
 Herring.prototype.deselect = function(){
