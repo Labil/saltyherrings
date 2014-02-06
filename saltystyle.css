@@ -8,27 +8,31 @@ body{
     display:inline-block;
 }
 
+h1{
+    color: white;
+}
 #info {
 	padding: 20px;
-	border: 1px solid black;
 	margin-bottom: 10px;
+    background-color: white;
 }
 #panel{
     position: absolute;
-    background-color: rgba(1, 1, 0, 0.9);
-    width: 25%;
+    background-color: white;
+    width: 30%;
     min-height: 600px;
     display: none;
-    border: 1px solid black;
+    border-right: 1px solid black;
 }
 #panelbutton{
     position: absolute;
-    width: 5%;
+    width: 3%;
     min-height: 600px;
-    background-color: red;
+    background-color: rgba(1, 1, 0, 0.9);
     border:1px solid black;
     padding-left: 15px;
     padding-right: 15px;
+    cursor: pointer;
 }
 #bowl{
     width:100%;
@@ -61,11 +65,24 @@ body{
 }
 
 /* Close button on form */
-.close {
+#x {
     position: absolute;
     right: 10px;
     top: 10px;
     font-weight: bold;
     font-family: sans-serif;
     cursor: pointer;
+    color: black;
+}
+
+#arrow-right {
+    width: 0; 
+    height: 0;
+    position: absolute;
+    top:47%;
+    left: 40%; 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    
+    border-left: 20px solid white;
 }
