@@ -1,12 +1,5 @@
-#panel {
-    display:inline-block;
-    min-width: 300px;
-    width:30%;
-    min-height: 400px;
-    float:left;
-    border:1px solid black;
-    padding-left: 15px;
-    padding-right: 15px;
+body{
+    margin:0;
 }
 .centered{
 	text-align: center;
@@ -19,4 +12,60 @@
 	padding: 20px;
 	border: 1px solid black;
 	margin-bottom: 10px;
+}
+#panel{
+    position: absolute;
+    background-color: rgba(1, 1, 0, 0.9);
+    width: 25%;
+    min-height: 600px;
+    display: none;
+    border: 1px solid black;
+}
+#panelbutton{
+    position: absolute;
+    width: 5%;
+    min-height: 600px;
+    background-color: red;
+    border:1px solid black;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#bowl{
+    width:100%;
+    position: absolute;
+    background-color: blue;
+}
+
+#popup{
+    position: absolute;
+    width: 20%;
+    height: 200px;
+    background-color: orange;
+    right: 20px;
+    top: 20px;
+    display: none;
+}
+
+#searchfield{
+    position: absolute;
+    width: 20%;
+    right: 20px;
+    top: 20px;   
+    padding:5px;
+}
+
+#footer{
+    position: absolute;
+    right: 20px;
+    top: 560px;   
+}
+
+/* Close button on form */
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-weight: bold;
+    font-family: sans-serif;
+    cursor: pointer;
 }

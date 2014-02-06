@@ -41,27 +41,12 @@ var Fishbowl = function(){
 };
 
 Fishbowl.prototype.setup = function(){
-    //this.setupRenderContext(800, 400);
-
-    imageMgr.load("assets/salty1.png", "Herring");
-    imageMgr.load("assets/salty2.png", "Herring_left");
-    imageMgr.load("assets/salty1_selected.png", "Herring_sel");
-    imageMgr.load("assets/salty2_selected.png", "Herring_left_sel");
-
-
-    var waitForImagesToLoad = function(){
-        //Waits for images to finish loading and for the context being passed from the main app
-        if(!imageMgr.isFinishedLoading() || !this.context){
-            console.log("Loading images...");
-        }
-        else{
-            clearInterval(intervalId);
-            this.start();
-        }
-    };
-
-    var boundWait = waitForImagesToLoad.bind(this);
-    var intervalId = setInterval(boundWait, 500); 
+    var imgPaths = ["assets/salty1.png", "assets/salty2.png", "assets/salty1_selected.png", "assets/salty2_selected.png"];
+    var imgNames = ["Herring", "Herring_left", "Herring_sel", "Herring_left_sel"];
+    var thisArg = this;
+    imageMgr.load(imgPaths, imgNames, function(){
+        thisArg.start();        
+    }); 
 };
 
 Fishbowl.prototype.addRenderContext = function(w, h, ctx){
@@ -77,7 +62,7 @@ Fishbowl.prototype.draw = function(){
         }
     };
 
-    globalThis.context.clearRect(0, 0, globalThis.canvasW, globalThis.canvasH);
+    this.context.clearRect(0, 0, globalThis.canvasW, globalThis.canvasH);
     drawElements(globalThis.herrings, globalThis.context);
 
     requestAnimationFrame(globalThis.draw);

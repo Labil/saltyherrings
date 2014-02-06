@@ -2,16 +2,21 @@
 var ImageManager = function(){
 	//Holds all your loaded images
 	this.library = {};
-	//used to check if loading is still in progress
-	this.finished = true;
 }
 
-ImageManager.prototype.load = function(path, name){
+//TODO: make it so that the names is extracted from the paths?
 
-    //Setting up a variable that will store setInterval function so we can clear after loading is finished
-    //var intervalId;
+//Takes an array of pathnames or a single path, a name array/single 
+//name and a callback fnction to run after images has loaded
+ImageManager.prototype.load = function(paths, names, callback){
 
-    var alreadyLoaded = function(){
+    /*if((typeof path) == String){
+        console.log("Loading just one image.");
+
+    }*/
+    console.log("Names array length: " + names.length);
+
+    var alreadyLoaded = function(name){
     	if(this.library[name]){
     		console.log("Image with name: " + name + " already exists.");
     		return true;
@@ -21,29 +26,35 @@ ImageManager.prototype.load = function(path, name){
     	}
     }.bind(this);
 
-    var loadImage = function(thisArg, callback){    
-        if(!alreadyLoaded()){
-            thisArg.finished = false;
+    var loadImage = function(imgPath, imgName, cb){ 
+        if(!alreadyLoaded(imgName)){
         	var img = new Image();
         	img.onload = function() {
-        	    console.log("Loaded image named " + name);
-        	    callback(thisArg, img);
+        	    console.log("Loaded image named " + imgName);
+        	    cb(imgName, img);
         	};
-        	img.src = path;
+        	img.src = imgPath;
         }
-        
     };
 
-    loadImage(this, function(thisArg, img){
-        thisArg.library[name] = img;
-        thisArg.finished = true;
-        console.log("Inserted loaded image into library.");
-    });
-};
+    var imgLoadCount = 0;
+    var thisArg = this;
 
-ImageManager.prototype.isFinishedLoading = function(){
-	return this.finished;
-}
+    for(var i = 0; i < paths.length; i++){
+        var nm = names[i];
+        var pth = paths[i];
+        loadImage(pth, nm, function(imgName, img){
+            thisArg.library[imgName] = img;
+            imgLoadCount++;
+
+            if(imgLoadCount >= paths.length){
+                console.log("Done loading images!");
+                callback();
+            }
+        });  
+    }
+    
+};
 
 ImageManager.prototype.getImage = function(name){
 	if(this.library[name]){
