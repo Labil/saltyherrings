@@ -26,6 +26,10 @@ var setupEventListeners = function(){
 	var marginY = 20;
 	window.addEventListener("mousedown", function(e){
 
+		//Don't wanna click behind the panel or panel button
+		if(isPanelVisible && e.clientX < panelW) return;
+		else if(!isPanelVisible && e.clientX < panelButtonW + 40) return;
+
 		var hit = false;
 		for(var i = 0; i < fishbowl.herrings.length; i++){
 			var hW = fishbowl.herrings[i].w;
@@ -61,17 +65,27 @@ var selectHerring = function(herring){
 	deselectHerring();
 	selectedHerring = herring;
 	selectedHerring.select();
-	//console.log(info.getElementsByTagName('p'));
-	//info.innerHTML = "<p>Hi my property is: " + selectedHerring.property + "</p>"; 
-	//app.info = "Hi my property is: " + selectedHerring.property;
+	displayInfo(herring);
 };
 
 var deselectHerring = function(){
 	if(selectedHerring){
 		selectedHerring.deselect();
 		selectedHerring = null;
-		//info.innerHTML = "<p>Use the search bar to lookup a salty herring by name, or click on the ones swimming around in the tank!</p>";
+		hideInfo();
 	}
+};
+
+var displayInfo = function(herring){
+	var popup = $('#popup');
+	popup.fadeIn(200);
+	popup.text("Hi my name is " + herring.name + " and I am " + herring.property);
+};
+
+var hideInfo = function(){
+	var popup = $('#popup');
+	popup.text("");
+	popup.hide();
 };
 
 //elem is a DOM element, attr is a string attribute
@@ -84,26 +98,28 @@ var getElementAttr = function(elem, attr){
 var initPanel = function(){
 	var button = $('#panelbutton');
 	var panel = $('#panel');
+	panelW = panel.width();
+	panelButtonW = button.width();
+	console.log(panelButtonW);
 	var xbutton = $('#x');
 	button.on('click', function(){
+		isPanelVisible = true;
 		button.fadeOut(200);
 		panel.animate({ width: 'toggle'}, 300);
 	});
 	xbutton.on('click', function(){
 		panel.animate({ width: 'toggle'}, 300);
 		button.fadeIn(300);
+		isPanelVisible = false;
 
 	});
-};
-
-var initPopup = function(){
-
 };
 
 var fishbowl;
 var selectedHerring = null;
 var canvas, context;
-var panelW, panelH;
+var panelW,panelButtonW;
+var isPanelVisible = false;
 
 $(function() {
 	fishbowl = new Fishbowl();

@@ -22,6 +22,8 @@ h1{
     width: 30%;
     min-height: 600px;
     display: none;
+    padding-top: 30px;
+    padding-left: 20px;
     border-right: 1px solid black;
 }
 #panelbutton{
@@ -47,7 +49,6 @@ h1{
     background-color: orange;
     right: 20px;
     top: 20px;
-    display: none;
 }
 
 #searchfield{
@@ -56,6 +57,16 @@ h1{
     right: 20px;
     top: 20px;   
     padding:5px;
+    display: none;
+}
+
+#spawnbutton{
+    width: 70%;
+    position: relative;
+    margin: auto;
+    color:white;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 #footer{
