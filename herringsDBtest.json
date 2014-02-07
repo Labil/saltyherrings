@@ -1,0 +1,25 @@
+{
+	"herrings" : [
+		{
+			"name" : "Lucas",
+			"number" : 0,
+			"date" : "02-07-2014",
+			"property" : "on the sweet side",
+			"contry" : "Norway"
+		},
+		{
+			"name" : "Lisa",
+			"number" : 1,
+			"date" : "02-07-2014",
+			"property" : "too salty",
+			"contry" : "Norway"
+		},
+		{
+			"name" : "Kro",
+			"number" : 2,
+			"date" : "02-07-2014",
+			"property" : "on the sweet side",
+			"contry" : "Norway"
+		}
+	]
+}

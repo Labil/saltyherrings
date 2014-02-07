@@ -115,6 +115,12 @@ var initPanel = function(){
 	});
 };
 
+var loadHerrings = function(path){
+	herringsObj = $.getJSON(path);
+	console.log(herringsObj);
+};
+
+var herringsObj;
 var fishbowl;
 var selectedHerring = null;
 var canvas, context;
@@ -122,6 +128,7 @@ var panelW,panelButtonW;
 var isPanelVisible = false;
 
 $(function() {
+	loadHerrings('http://plainbrain.net/salty/herringsDBtest.json');
 	fishbowl = new Fishbowl();
 
 	setupRenderContext();
