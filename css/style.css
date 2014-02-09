@@ -1,0 +1,103 @@
+body{
+    margin:0;
+}
+.centered{
+	text-align: center;
+}
+.canvas {
+    display:inline-block;
+}
+
+h1{
+    color: white;
+}
+#info {
+	padding: 20px;
+	margin-bottom: 10px;
+    background-color: white;
+}
+#panel{
+    position: absolute;
+    background-color: white;
+    width: 30%;
+    min-height: 600px;
+    display: none;
+    padding-top: 30px;
+    padding-left: 20px;
+    border-right: 1px solid black;
+}
+#panelbutton{
+    position: absolute;
+    width: 3%;
+    min-height: 600px;
+    background-color: rgba(1, 1, 0, 0.9);
+    border:1px solid black;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+}
+#bowl{
+    width:100%;
+    position: absolute;
+    background-color: blue;
+}
+
+#popup{
+    position: absolute;
+    width: 20%;
+    min-height: 200px;
+    background-color: white;
+    right: 20px;
+    top: 20px;
+    padding:10px;
+    border: 1px solid gray;
+    text-align: center;
+    display: none;
+}
+
+#searchfield{
+    position: absolute;
+    width: 20%;
+    right: 20px;
+    top: 20px;   
+    padding:5px;
+    /*display: none;*/
+}
+
+#spawnbutton{
+    width: 70%;
+    position: relative;
+    margin: auto;
+    color:white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#footer{
+    position: absolute;
+    right: 20px;
+    top: 560px;   
+}
+
+/* Close button on form */
+#x {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-weight: bold;
+    font-family: sans-serif;
+    cursor: pointer;
+    color: black;
+}
+
+#arrow-right {
+    width: 0; 
+    height: 0;
+    position: absolute;
+    top:47%;
+    left: 40%; 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    
+    border-left: 20px solid white;
+}

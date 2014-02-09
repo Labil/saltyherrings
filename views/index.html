@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css">
+	<!--This docment /socket.io/socket.io.js is served by the socket running, it is
+		fetched from the socet.io folder and made available realtime. No need to move doc-->
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src='javascript/imageManager.js'></script>
+	<script type="text/javascript" src='javascript/herring.js'></script>
+	<script type="text/javascript" src='javascript/fishbowl.js'></script>
+	<script type="text/javascript" src='javascript/main.js'></script>
+</head>
+<body>
+
+	<div id="bowl">
+		<div id="panel">
+			<div id="x">X</div>
+			<h1 class="centered">Salty Herrings.</h1>
+			<div id="info">
+				<p class="centered">A social network for herrings.</p>
+				<tr />
+				<p>If you want to join a network of tens of interesting people,
+				without ever having to get to know them, you have definetely
+				come to the right place!</p>
+				<br />
+				<p> Choose a name for your herring and press the big salty button.</p>
+				<center><input id="nameChoice" value="Choose a name" /></center>
+				<br /><br />
+				<center><button id="spawnbutton">SPAWN</button></center>
+			</div>
+		</div>
+		<div id="panelbutton">
+			<div id="arrow-right"></div>
+		</div>
+		<div id="popup">
+		</div>
+		<input id="searchfield" value="Search for herring" />
+		<div id="footer">sunshake.io</div>
+
+	</div>			
+</body>
+</html>
+
