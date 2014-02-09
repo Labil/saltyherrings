@@ -36,10 +36,9 @@ var Fishbowl = function(data){
     console.log("new fishbowl");
     this.herringNames = [];
     this.herrings = [];
+    //saving data in variable to use when adding herrings on start()
+    this.loadData = data;
 
-    for(var i = 0; i < data.herrings.length; i++){
-        this.addHerring(data.herrings[i], 300, 300);
-    }
     this.selectedHerring = null;
     this.setup();
     globalThis = this;
@@ -47,13 +46,20 @@ var Fishbowl = function(data){
 
 Fishbowl.prototype.searchHerringByName = function(name){
     for(var i = 0; i < this.herringNames.length; i++){
-        console.log("Looking for: " + this.herringNames[i]);
         if(this.herringNames[i] == name){
             console.log("Found name: " + name);
             return true;
         }
     }
     return false;
+};
+
+Fishbowl.prototype.getRandomSpawnpoint = function(multiplier){
+    var min = 30;
+    var max = multiplier - 30;
+    var range = max - min;
+    var rand = Math.floor((Math.random() * range) + min);
+    return rand;
 };
 
 Fishbowl.prototype.setup = function(){
@@ -87,10 +93,16 @@ Fishbowl.prototype.draw = function(){
 
 Fishbowl.prototype.start = function(){
     console.log("Starting");
+    //Must wait with adding the herrings until the render context is in place
+    for(var i = 0; i < this.loadData.herrings.length; i++){
+        this.addHerring(this.loadData.herrings[i].data);
+    }
     this.draw();
 };
 
 Fishbowl.prototype.addHerring = function(herring, xpos, ypos){
+    if(xpos == undefined) xpos = this.getRandomSpawnpoint(this.canvasW);
+    if(ypos == undefined) ypos = this.getRandomSpawnpoint(this.canvasH);
     var rand = Math.random();
     if(rand <= 0.4) rand += 0.5;
     //157 and 60 is w & h of png. CBA to make variables.

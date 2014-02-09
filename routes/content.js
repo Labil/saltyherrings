@@ -11,16 +11,17 @@ function ContentHandler(db, io){
 
 			if(err) return next(err);
 
-			 io.sockets.on('connection', function (socket) {
-			 	console.log('A client is connected!');
-			   socket.emit('loadHerrings', { herrings: result });
+			io.sockets.on('connection', function (socket) {
+				console.log('Loading herrings!');
+			    socket.emit('loadHerrings', { herrings: result });
 
-			   socket.on('addHerring', function(data){
+			    socket.on('addHerring', function(data){
+			   		console.log("Received herring to save");
 			   		contentFetcher.saveHerring(data, function(err, result){
 			   			if(err) return next(err);
 			   		});
-			   });
-			 });
+			    });
+			});
 
 			return res.render('index', {
 				title: 'Salty Herrings',

@@ -23,12 +23,12 @@
 			<div id="info">
 				<p class="centered">A social network for herrings.</p>
 				<tr />
-				<p>If you want to join a network of tens of interesting people,
+				<p>If you want to join a network of interesting people
 				without ever having to get to know them, you have definetely
 				come to the right place!</p>
 				<br />
 				<p> Choose a name for your herring and press the big salty button.</p>
-				<center><input id="nameChoice" value="" placeholder="Choose a name" /></center>
+				<center><input id="nameInput" value="" placeholder="Choose a name" /></center>
 				<br /><br />
 				<center><button id="spawnbutton">SPAWN</button></center>
 			</div>
@@ -42,10 +42,10 @@
 			list="datalist1" />
 		<datalist id="datalist1">
 		{% for h in herrings %}
-			<option value="{{h.name}}" />
+			<option value="{{h.data.name}}" />
 		{% endfor %}
 		</datalist>
-		<div id="footer">sunshake.io</div>
+		<div id="footer"><a href="http://sunshake.io">sunshake.io</a></div>
 
 	</div>			
 </body>

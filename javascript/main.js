@@ -4,15 +4,23 @@
 // SALTY HERRINGS.
 
 //TODO: 
-//      - When click on herring, display name / info (Herring class)
 //		- Add resize window event so fishbowl and interface scales
-//		- Add side panel to site for info display and name choice & search
 //		- Make sprite sheet in stead of separate images.
+//		- Make the size fit all screen types. On resize event too.
+//		- Add description on naming rule / some tooltip that 
+//		  informs the user if they have chosen an invalid name
+//		- Add cookies to remember user and prevent them from adding > 1 herring
+//		- Display stats about what country the herrings are from. etc
+//		- Add more properties fro the herrings
+//		- Remake design of popup info
+//		- Refactor code quite a bit... and remove some (all) of the globals
+//		- Change graphics on select
 
 var setupRenderContext = function(){
 	canvas = document.createElement("canvas");
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	//making it slightly shorter than the windowheight to account for bookmarks bar
+	canvas.height = window.innerHeight - 60;
 	//canvas.width = $(window).width();
 	//canvas.height = $(window).height();
 	canvas.setAttribute("class", "canvas");
@@ -50,7 +58,6 @@ var setupEventListeners = function(){
 		if(hit == false){
 			deselectHerring();
 			hideInfo();
-			//Only add herrings when you're allowed! TODO
 			/*if(e.clientX < canvas.width 
 				&& e.clientX > 0 
 				&& e.clientY < canvas.height-marginY 
@@ -137,12 +144,60 @@ var initSearchField = function(){
 					}
 				}
 			}
+			searchfield.val("");
 	    }
 	});
-	/*searchfield.on('input', function(e){
-		var found = fishbowl.searchHerringByName(searchfield.val());
-		console.log(found);
-	});*/
+};
+
+var initAddHerring = function(){
+	var nameInput = $('#nameInput');
+	var spawnButton = $('#spawnbutton');
+	spawnButton.attr('disabled','disabled');
+
+	spawnButton.on('click', function(){
+		var name = nameInput.val();
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var year = d.getFullYear();
+		var formatted = (month<10 ? '0' : '') + month + "-" +
+			(day < 10 ? '0' : '') + day + "-" + year;
+		var newHerring = {
+			name: name,
+			number: fishbowl.herrings.length,
+			date: formatted,
+			property: assignProperty(),
+			country: "Norway"
+		};
+		fishbowl.addHerring(newHerring, canvas.width/2, canvas.height/2);
+		addHerring(newHerring);
+		nameInput.val("");
+		//Updating the search auto-complete values
+		$('<option></option>', {
+			val: name
+		}).appendTo($('#datalist1'));
+
+		spawnButton.attr('disabled','disabled');
+		selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
+	});
+
+	nameInput.on('input', function(e){
+		var name = nameInput.val();
+		var found = fishbowl.searchHerringByName(name);
+		if(name.length >= 2 && !found){
+			spawnButton.removeAttr('disabled');
+		}
+		else{
+			spawnButton.attr('disabled','disabled');
+		}
+	});
+};
+
+var assignProperty = function(){
+    var properties = ['too salty', 'happy-go-lucky', 'good lookin\'', 
+                        'on the sweet side', 'great in bed', 'moist'];
+    var rand = Math.floor(Math.random() * properties.length);
+    return properties[rand];
 };
 
 var addHerring = function(herring){
@@ -158,18 +213,17 @@ var isPanelVisible = false;
 var socket = io.connect('http://localhost:5000');
 socket.on('loadHerrings', function (data) {
  
-  //To prevent it from loading twice
-  if(fishbowl == undefined){
-  	fishbowl = new Fishbowl(data);
+	//To prevent it from loading twice
+	if(fishbowl == undefined){
+		fishbowl = new Fishbowl(data);
 
-  	setupRenderContext();
-  	fishbowl.addRenderContext(canvas.width, canvas.height, context);
-  	setupEventListeners();
-  	initPanel();
-  	initSearchField();
-  }
-  
-  //socket.emit('my other event', { my: 'data' });
+		setupRenderContext();
+		fishbowl.addRenderContext(canvas.width, canvas.height, context);
+		setupEventListeners();
+		initPanel();
+		initSearchField();
+		initAddHerring();
+	}
 });
 
 

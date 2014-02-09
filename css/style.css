@@ -14,7 +14,7 @@ h1{
 #info {
 	padding: 20px;
 	margin-bottom: 10px;
-    background-color: white;
+    /*background-color: white;*/
 }
 #panel{
     position: absolute;
@@ -24,12 +24,14 @@ h1{
     display: none;
     padding-top: 30px;
     padding-left: 20px;
-    border-right: 1px solid black;
+    top:20px;
+    border: 1px solid gray;
 }
 #panelbutton{
     position: absolute;
     width: 3%;
     min-height: 600px;
+    top:20px;
     background-color: rgba(1, 1, 0, 0.9);
     border:1px solid black;
     padding-left: 15px;
@@ -46,6 +48,7 @@ h1{
     position: absolute;
     width: 20%;
     min-height: 200px;
+    /*background-color: rgba(1.0, 1.0, 1.0, 0.5);*/
     background-color: white;
     right: 20px;
     top: 20px;
@@ -73,10 +76,16 @@ h1{
     font-size: 20px;
 }
 
+a{
+    text-decoration: none;
+}
+
 #footer{
     position: absolute;
+    font-family: "ClearLine";
+    font-size: 2.5em; 
     right: 20px;
-    top: 560px;   
+    top: 580px;   
 }
 
 /* Close button on form */
@@ -100,4 +109,9 @@ h1{
     border-bottom: 20px solid transparent;
     
     border-left: 20px solid white;
+}
+
+@font-face {
+  font-family: "ClearLine";
+  src: url("ClearLine.ttf");
 }

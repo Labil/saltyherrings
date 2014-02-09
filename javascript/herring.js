@@ -13,14 +13,6 @@ var Herring = function(herring, xPos, yPos, speed, w, h, canvasW) {
     this.date = herring.date;
     this.country = herring.country;
 
-    /*var assignProperty = function(){
-        var properties = ['too salty', 'happy-go-lucky', 'good lookin\'', 
-                            'on the sweet side', 'great in bed', 'moist'];
-        var rand = Math.floor(Math.random() * properties.length);
-        return properties[rand];
-    };
-    this.property = assignProperty();*/
-
     //Set initial flipout to 2 so that if the fish is spawned 
     //near the edge it won't flip around and swim the wrong way
     this.flipTimeout = 2;
@@ -28,10 +20,6 @@ var Herring = function(herring, xPos, yPos, speed, w, h, canvasW) {
     var halfW = canvasW / 2;
     if(xPos <= halfW) this.speed = speed;
     else this.speed = -speed;
-};
-
-Herring.prototype.assignName = function(name){
-    this.name = name;
 };
 
 Herring.prototype.select = function(){
