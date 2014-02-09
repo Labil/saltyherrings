@@ -10,16 +10,21 @@ function ContentHandler(db, io){
 		contentFetcher.getHerrings(function(err, result){
 
 			if(err) return next(err);
-			 
-			 console.log("About to call sockets on funct in displayMainPage");
+
 			 io.sockets.on('connection', function (socket) {
 			 	console.log('A client is connected!');
 			   socket.emit('loadHerrings', { herrings: result });
+
+			   socket.on('addHerring', function(data){
+			   		contentFetcher.saveHerring(data, function(err, result){
+			   			if(err) return next(err);
+			   		});
+			   });
 			 });
 
 			return res.render('index', {
-				title: 'Salty Herrings'
-				//herrings: result
+				title: 'Salty Herrings',
+				herrings: result
 			});
 		});
 		

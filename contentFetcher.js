@@ -19,6 +19,14 @@ function ContentFetcher(db){
 			
 		});
 	};
+	this.saveHerring = function(herring, callback){
+		collection.insert(herring, function(err, doc){
+			if(err) return callback(err, null);
+			console.log("Herring with name: " + doc.name +" successfully inserted in db");
+			return callback(err, doc);
+		});
+
+	}
 }
 
 module.exports.ContentFetcher = ContentFetcher;

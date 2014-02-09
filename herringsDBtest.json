@@ -5,21 +5,21 @@
 			"number" : 0,
 			"date" : "02-07-2014",
 			"property" : "on the sweet side",
-			"contry" : "Norway"
+			"country" : "Norway"
 		},
 		{
 			"name" : "Lisa",
 			"number" : 1,
 			"date" : "02-07-2014",
 			"property" : "too salty",
-			"contry" : "Norway"
+			"country" : "Norway"
 		},
 		{
 			"name" : "Kro",
 			"number" : 2,
 			"date" : "02-07-2014",
 			"property" : "on the sweet side",
-			"contry" : "Norway"
+			"country" : "Norway"
 		}
 	]
 }

@@ -34,15 +34,26 @@ var imageMgr = new ImageManager();
 
 var Fishbowl = function(data){
     console.log("new fishbowl");
-    console.log(data.herrings);
+    this.herringNames = [];
     this.herrings = [];
-    //this.herrings = data.herrings;
+
     for(var i = 0; i < data.herrings.length; i++){
         this.addHerring(data.herrings[i], 300, 300);
     }
     this.selectedHerring = null;
     this.setup();
     globalThis = this;
+};
+
+Fishbowl.prototype.searchHerringByName = function(name){
+    for(var i = 0; i < this.herringNames.length; i++){
+        console.log("Looking for: " + this.herringNames[i]);
+        if(this.herringNames[i] == name){
+            console.log("Found name: " + name);
+            return true;
+        }
+    }
+    return false;
 };
 
 Fishbowl.prototype.setup = function(){
@@ -76,7 +87,6 @@ Fishbowl.prototype.draw = function(){
 
 Fishbowl.prototype.start = function(){
     console.log("Starting");
-    console.log("Length of herrings array: " + this.herrings.length);
     this.draw();
 };
 
@@ -88,6 +98,7 @@ Fishbowl.prototype.addHerring = function(herring, xpos, ypos){
     var hH = 60 * rand;
     var hX = xpos - hW / 2;
     var hY = ypos - hH / 2; 
-    console.log("Adding herring with name: " + herring.name);
+    //Saves an array of the herring names to be used for searching
+    this.herringNames.push(herring.name);
     this.herrings.push(new Herring(herring, hX, hY, rand, hW, hH, this.canvasW));
 };

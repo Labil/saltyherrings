@@ -111,6 +111,7 @@ var initPanel = function(){
 	panelW = panel.width();
 	panelButtonW = button.width();
 	var xbutton = $('#x');
+
 	button.on('click', function(){
 		isPanelVisible = true;
 		button.fadeOut(200);
@@ -124,6 +125,29 @@ var initPanel = function(){
 	});
 };
 
+var initSearchField = function(){
+	var searchfield = $('#searchfield');
+	searchfield.keyup(function (e) {
+	    if (e.keyCode == 13) {
+	        var found = fishbowl.searchHerringByName(searchfield.val());
+			if(found){
+				for(var i = 0; i < globalThis.herrings.length; i++){
+					if(globalThis.herrings[i].name == searchfield.val()){
+						selectHerring(globalThis.herrings[i]);
+					}
+				}
+			}
+	    }
+	});
+	/*searchfield.on('input', function(e){
+		var found = fishbowl.searchHerringByName(searchfield.val());
+		console.log(found);
+	});*/
+};
+
+var addHerring = function(herring){
+	socket.emit('addHerring', { data: herring });
+};
 
 var fishbowl;
 var selectedHerring = null;
@@ -142,6 +166,7 @@ socket.on('loadHerrings', function (data) {
   	fishbowl.addRenderContext(canvas.width, canvas.height, context);
   	setupEventListeners();
   	initPanel();
+  	initSearchField();
   }
   
   //socket.emit('my other event', { my: 'data' });
