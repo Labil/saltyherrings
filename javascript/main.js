@@ -185,7 +185,7 @@ var initAddHerring = function(){
 
 			spawnButton.attr('disabled','disabled');
 			selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
-			
+
 		}, "jsonp");
 
 	});
@@ -219,7 +219,7 @@ var canvas, context;
 var panelW,panelButtonW;
 var isPanelVisible = false;
 
-var socket = io.connect('http://localhost:5000');
+var socket = io.connect('http://saltyherrings.herokuapp.com:5000');
 socket.on('loadHerrings', function (data) {
  
 	//To prevent it from loading twice
