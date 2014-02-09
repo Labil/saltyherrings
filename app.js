@@ -29,7 +29,7 @@ MongoClient.connect(mongoUri, function(err, db){
 	
 
 	server.listen(app.get('port'), function(){
-		console.log("Express server up and running");
+		console.log("Express server up and running on port: " + app.get('port'));
 	});
 	//app.listen(process.env.PORT || port);
 

@@ -219,7 +219,7 @@ var canvas, context;
 var panelW,panelButtonW;
 var isPanelVisible = false;
 
-var socket = io.connect('http://saltyherrings.herokuapp.com:5000');
+var socket = io.connect('http://saltyherrings.herokuapp.com:5500');
 socket.on('loadHerrings', function (data) {
  
 	//To prevent it from loading twice
