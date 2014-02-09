@@ -11,7 +11,7 @@ var Herring = function(herring, xPos, yPos, speed, w, h, canvasW) {
     this.name = herring.name;
     this.number = herring.number;
     this.date = herring.date;
-    this.country = herring.country;
+    this.city = herring.city;
 
     //Set initial flipout to 2 so that if the fish is spawned 
     //near the edge it won't flip around and swim the wrong way

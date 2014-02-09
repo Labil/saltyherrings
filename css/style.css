@@ -29,7 +29,7 @@ h1{
 }
 #panelbutton{
     position: absolute;
-    width: 3%;
+    width: 4%;
     min-height: 600px;
     top:20px;
     background-color: rgba(1, 1, 0, 0.9);
@@ -84,7 +84,7 @@ a{
     position: absolute;
     font-family: "ClearLine";
     font-size: 2.5em; 
-    right: 20px;
+    right: 25px;
     top: 580px;   
 }
 

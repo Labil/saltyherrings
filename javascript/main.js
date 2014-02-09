@@ -93,7 +93,7 @@ var displayInfo = function(herring){
 	popup.html("<p>Herring  #" + herring.number + "</p>"
 		 + "<p>Name: " + herring.name + "</p>"
 		 + "<p>Created: " + herring.date + "</p>"
-		 + "<p>Country: " + herring.country + "</p>"
+		 + "<p>City of origin: " + herring.city + "</p>"
 		 + "<p>Property: " + herring.property + "</p>");
 };
 
@@ -162,23 +162,32 @@ var initAddHerring = function(){
 		var year = d.getFullYear();
 		var formatted = (month<10 ? '0' : '') + month + "-" +
 			(day < 10 ? '0' : '') + day + "-" + year;
-		var newHerring = {
-			name: name,
-			number: fishbowl.herrings.length,
-			date: formatted,
-			property: assignProperty(),
-			country: "Norway"
-		};
-		fishbowl.addHerring(newHerring, canvas.width/2, canvas.height/2);
-		addHerring(newHerring);
-		nameInput.val("");
-		//Updating the search auto-complete values
-		$('<option></option>', {
-			val: name
-		}).appendTo($('#datalist1'));
 
-		spawnButton.attr('disabled','disabled');
-		selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
+		var newHerring = {};
+
+		//Getting users location! Doesn't require permission
+		$.get("http://ipinfo.io", function (response) {
+			newHerring = {
+				name: name,
+				number: fishbowl.herrings.length,
+				date: formatted,
+				property: assignProperty(),
+				city: response.city 
+			};
+			fishbowl.addHerring(newHerring, canvas.width/2, canvas.height/2);
+			addHerring(newHerring);
+			console.log(response.city);
+			nameInput.val("");
+			//Updating the search auto-complete values
+			$('<option></option>', {
+				val: name
+			}).appendTo($('#datalist1'));
+
+			spawnButton.attr('disabled','disabled');
+			selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
+			
+		}, "jsonp");
+
 	});
 
 	nameInput.on('input', function(e){
