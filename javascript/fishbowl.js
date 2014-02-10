@@ -93,6 +93,7 @@ Fishbowl.prototype.draw = function(){
 
 Fishbowl.prototype.start = function(){
     console.log("Starting");
+    console.log("Herrings array size at start: " + this.loadData.herrings.length);
     //Must wait with adding the herrings until the render context is in place
     for(var i = 0; i < this.loadData.herrings.length; i++){
         this.addHerring(this.loadData.herrings[i].data);
