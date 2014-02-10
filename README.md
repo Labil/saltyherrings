@@ -11,7 +11,7 @@ __d3__,
 &amp;
 __html canvas__!
 
-(Work in progress.)
+Currently live at http://saltyherrings.herokuapp.com/  (some bugs with the db I think. Working fine locally)
 
 ![salty](http://www.plainbrain.net/github_img/saltydone.png)
 
