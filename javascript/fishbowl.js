@@ -29,29 +29,28 @@
         };
 }());
 
-var globalThis; //Lol. TODO: Solve this hack
+///////////////////// Fishbowl //////////////////////////////////////////
 var imageMgr = new ImageManager();
 
-var Fishbowl = function(data){
-    console.log("new fishbowl");
-    this.herringNames = [];
-    this.herrings = [];
-    //saving data in variable to use when adding herrings on start()
-    this.loadData = data;
+//canvas w & h, context, the data from my db, a list of paths for graphics, 
+//and names for graphics
+var Fishbowl = function(canvasW, canvasH, ctx, data, imgPaths, imgNames){
+    this.canvasW = canvasW;
+    this.canvasH = canvasH;
+    this.context = ctx;
 
+    this.herringNames = []; //List of names for search function
+    this.herrings = []; //Herring objects
+    this.loadHerrings(data.herrings);
+    this.loadImages(imgPaths, imgNames);
     this.selectedHerring = null;
-    this.setup();
-    globalThis = this;
 };
 
 Fishbowl.prototype.searchHerringByName = function(name){
     for(var i = 0; i < this.herringNames.length; i++){
-        if(this.herringNames[i] == name){
-            console.log("Found name: " + name);
-            return true;
-        }
+        if(this.herringNames[i] == name) return i;
     }
-    return false;
+    return -1;
 };
 
 Fishbowl.prototype.getRandomSpawnpoint = function(multiplier){
@@ -62,19 +61,9 @@ Fishbowl.prototype.getRandomSpawnpoint = function(multiplier){
     return rand;
 };
 
-Fishbowl.prototype.setup = function(){
-    var imgPaths = ["assets/salty1.png", "assets/salty2.png", "assets/salty1_selected.png", "assets/salty2_selected.png"];
-    var imgNames = ["Herring", "Herring_left", "Herring_sel", "Herring_left_sel"];
-    var thisArg = this;
-    imageMgr.load(imgPaths, imgNames, function(){
-        thisArg.start();        
-    }); 
-};
-
-Fishbowl.prototype.addRenderContext = function(w, h, ctx){
-    this.canvasW = w;
-    this.canvasH = h;
-    this.context = ctx;
+//After the images are fully loaded, drawing of screen can begin
+Fishbowl.prototype.loadImages = function(imgPaths, imgNames){
+    imageMgr.load(imgPaths, imgNames, this.startDrawing.bind(this));
 };
 
 Fishbowl.prototype.draw = function(){
@@ -84,21 +73,20 @@ Fishbowl.prototype.draw = function(){
             arr[i].draw(context);
         }
     };
+    this.context.clearRect(0, 0, this.canvasW, this.canvasH);
+    drawElements(this.herrings, this.context);
 
-    this.context.clearRect(0, 0, globalThis.canvasW, globalThis.canvasH);
-    drawElements(globalThis.herrings, globalThis.context);
-
-    requestAnimationFrame(globalThis.draw);
+    requestAnimationFrame(this.draw.bind(this)); //to avoid this being window
 };
 
-Fishbowl.prototype.start = function(){
-    console.log("Starting");
-    console.log("Herrings array size at start: " + this.loadData.herrings.length);
-    //Must wait with adding the herrings until the render context is in place
-    for(var i = 0; i < this.loadData.herrings.length; i++){
-        this.addHerring(this.loadData.herrings[i].data);
-    }
+Fishbowl.prototype.startDrawing = function(){
     this.draw();
+};
+
+Fishbowl.prototype.loadHerrings = function(herrings){
+    for(var i = 0; i < herrings.length; i++){
+        this.addHerring(herrings[i].data);
+    }
 };
 
 Fishbowl.prototype.addHerring = function(herring, xpos, ypos){

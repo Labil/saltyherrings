@@ -2,34 +2,32 @@
 //////////////////////////////////////////////////////////////////////////////
 
 // SALTY HERRINGS.
+// Solveig Hanse 2014
 
 //TODO: 
 //		- Add resize window event so fishbowl and interface scales
 //		- Make sprite sheet in stead of separate images.
-//		- Make the size fit all screen types. On resize event too.
 //		- Add description on naming rule / some tooltip that 
 //		  informs the user if they have chosen an invalid name
 //		- Add cookies to remember user and prevent them from adding > 1 herring
 //		- Display stats about what country the herrings are from. etc
 //		- Add more properties fro the herrings
 //		- Remake design of popup info
-//		- Refactor code quite a bit... and remove some (all) of the globals
-//		- Change graphics on select
+//		- Refactor code
+//		- Change graphics of selected to an outline
 
 var setupRenderContext = function(){
 	canvas = document.createElement("canvas");
 	canvas.width = window.innerWidth;
 	//making it slightly shorter than the windowheight to account for bookmarks bar
 	canvas.height = window.innerHeight - 60;
-	//canvas.width = $(window).width();
-	//canvas.height = $(window).height();
 	canvas.setAttribute("class", "canvas");
 	document.body.appendChild(canvas);
 
 	context = canvas.getContext("2d");
 };
 
-var setupEventListeners = function(){
+var setupEventListeners = function(herrings){
 	//Slight margin on Y axis so the herrings aren't placed outside the window
 	var marginY = 20;
 	window.addEventListener("mousedown", function(e){
@@ -39,18 +37,18 @@ var setupEventListeners = function(){
 		else if(!isPanelVisible && e.clientX < panelButtonW + 40) return;
 
 		var hit = false;
-		for(var i = 0; i < fishbowl.herrings.length; i++){
-			var hW = fishbowl.herrings[i].w;
-			var hH = fishbowl.herrings[i].h;
-			var hX = fishbowl.herrings[i].xPos;
-			var hY = fishbowl.herrings[i].yPos;
+		for(var i = 0; i < herrings.length; i++){
+			var hW = herrings[i].w;
+			var hH = herrings[i].h;
+			var hX = herrings[i].xPos;
+			var hY = herrings[i].yPos;
 
 			if(e.clientX > hX 
 				&& e.clientX < hX + hW 
 				&& e.clientY > hY 
 				&& e.clientY < hY + hH){
 
-				selectHerring(fishbowl.herrings[i]);
+				selectHerring(herrings[i]);
 				hit = true;
 				break;
 			}
@@ -58,13 +56,6 @@ var setupEventListeners = function(){
 		if(hit == false){
 			deselectHerring();
 			hideInfo();
-			/*if(e.clientX < canvas.width 
-				&& e.clientX > 0 
-				&& e.clientY < canvas.height-marginY 
-				&& e.clientY > marginY){
-				fishbowl.addHerring(e.clientX, e.clientY);
-				selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
-			}*/
 		}
 	}, false);
 };
@@ -105,86 +96,68 @@ var hideInfo = function(){
 	searchfield.show();
 };
 
-//elem is a DOM element, attr is a string attribute
-var getElementAttr = function(elem, attr){
-	var style = window.getComputedStyle(elem);
-	var value = style.getPropertyValue(attr);
-	return parseInt(value);
-};
-
-var initPanel = function(){
-	var button = $('#panelbutton');
-	var panel = $('#panel');
+var initPanel = function(panel, button, xbutton){
+	
 	panelW = panel.width();
 	panelButtonW = button.width();
-	var xbutton = $('#x');
 
 	button.on('click', function(){
 		isPanelVisible = true;
 		button.fadeOut(200);
-		panel.animate({ width: 'toggle'}, 300);
+		panel.animate({ width: 'toggle'}, 300); //Slides in horizontally
 	});
 	xbutton.on('click', function(){
 		panel.animate({ width: 'toggle'}, 300);
 		button.fadeIn(300);
 		isPanelVisible = false;
-
 	});
 };
 
-var initSearchField = function(){
-	var searchfield = $('#searchfield');
+var initSearchField = function(searchfield, fishbowl){
 	searchfield.keyup(function (e) {
 	    if (e.keyCode == 13) {
-	        var found = fishbowl.searchHerringByName(searchfield.val());
-			if(found){
-				for(var i = 0; i < globalThis.herrings.length; i++){
-					if(globalThis.herrings[i].name == searchfield.val()){
-						selectHerring(globalThis.herrings[i]);
-					}
-				}
-			}
+	        var index = fishbowl.searchHerringByName(searchfield.val());
+			if(index >= 0)
+				selectHerring(fishbowl.herrings[index]);
 			searchfield.val("");
 	    }
 	});
 };
+//M-D-Y 02-10-2014
+var formatDate = function(d){
+	var month = d.getMonth()+1,
+		day = d.getDate(),
+		year = d.getFullYear();
+	return (month<10 ? '0' : '') + month + "-" +
+		(day < 10 ? '0' : '') + day + "-" + year;
+};
 
-var initAddHerring = function(){
-	var nameInput = $('#nameInput');
-	var spawnButton = $('#spawnbutton');
-	spawnButton.attr('disabled','disabled');
+var initAddHerring = function(nameInput, spawnButton, fishbowl){
+	
+	spawnButton.attr('disabled','disabled'); //Button should be disabled at start
 
 	spawnButton.on('click', function(){
+		
 		var name = nameInput.val();
-		var d = new Date();
-		var month = d.getMonth()+1;
-		var day = d.getDate();
-		var year = d.getFullYear();
-		var formatted = (month<10 ? '0' : '') + month + "-" +
-			(day < 10 ? '0' : '') + day + "-" + year;
-
-		var newHerring = {};
-
 		//Getting users location! Doesn't require permission
 		$.get("http://ipinfo.io", function (response) {
-			newHerring = {
+			var newHerring = {
 				name: name,
 				number: fishbowl.herrings.length,
-				date: formatted,
+				date: formatDate(new Date()),
 				property: assignProperty(),
 				city: response.city 
 			};
 			fishbowl.addHerring(newHerring, canvas.width/2, canvas.height/2);
 			addHerring(newHerring);
-			console.log(response.city);
-			nameInput.val("");
+			nameInput.val(""); //Empty input field
 			//Updating the search auto-complete values
 			$('<option></option>', {
 				val: name
 			}).appendTo($('#datalist1'));
 
-			spawnButton.attr('disabled','disabled');
-			selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]);
+			spawnButton.attr('disabled','disabled'); //disable button after submit
+			selectHerring(fishbowl.herrings[fishbowl.herrings.length-1]); //select new herring
 
 		}, "jsonp");
 
@@ -192,8 +165,8 @@ var initAddHerring = function(){
 
 	nameInput.on('input', function(e){
 		var name = nameInput.val();
-		var found = fishbowl.searchHerringByName(name);
-		if(name.length >= 2 && !found){
+		var index = fishbowl.searchHerringByName(name);
+		if(name.length >= 3 && index < 0){
 			spawnButton.removeAttr('disabled');
 		}
 		else{
@@ -204,7 +177,7 @@ var initAddHerring = function(){
 
 var assignProperty = function(){
     var properties = ['too salty', 'happy-go-lucky', 'good lookin\'', 
-                        'on the sweet side', 'great in bed', 'moist'];
+                        'on the sweet side', 'great in bed', 'moist', 'cute but stupid'];
     var rand = Math.floor(Math.random() * properties.length);
     return properties[rand];
 };
@@ -213,38 +186,28 @@ var addHerring = function(herring){
 	socket.emit('addHerring', { data: herring });
 };
 
-var fishbowl;
 var selectedHerring = null;
 var canvas, context;
 var panelW,panelButtonW;
 var isPanelVisible = false;
 
+//window.location.hostname finds the correct address & port
 var socket = io.connect(window.location.hostname);
 socket.on('loadHerrings', function (data) {
- 
+ 	
+ 	var fishbowl;
 	//To prevent it from loading twice
 	if(fishbowl == undefined){
-		fishbowl = new Fishbowl(data);
-
+		//Must make context first, to send in to fishbowl
 		setupRenderContext();
-		fishbowl.addRenderContext(canvas.width, canvas.height, context);
-		setupEventListeners();
-		initPanel();
-		initSearchField();
-		initAddHerring();
+		var imgPaths = ["assets/salty1.png", "assets/salty2.png", "assets/salty1_selected.png", "assets/salty2_selected.png"];
+		var imgNames = ["Herring", "Herring_left", "Herring_sel", "Herring_left_sel"];
+		fishbowl = new Fishbowl(canvas.width, canvas.height, context, data, imgPaths, imgNames);
+
+		setupEventListeners(fishbowl.herrings);
+		initPanel($('#panel'), $('#panelbutton'), $('#x'));
+		initSearchField($('#searchfield'), fishbowl);
+		initAddHerring($('#nameInput'), $('#spawnbutton'), fishbowl);
 	}
 });
-
-
-/*$(function() {
-
-	fishbowl = new Fishbowl();
-
-	setupRenderContext();
-	fishbowl.addRenderContext(canvas.width, canvas.height, context);
-	setupEventListeners();
-	initPanel();
-
-});
-*/
 
