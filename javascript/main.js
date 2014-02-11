@@ -190,12 +190,13 @@ var selectedHerring = null;
 var canvas, context;
 var panelW,panelButtonW;
 var isPanelVisible = false;
+//Fishbowl must be global atm, else the socket loads it many times. Should be fixed
+var fishbowl;
 
 //window.location.hostname finds the correct address & port
 var socket = io.connect(window.location.hostname);
 socket.on('loadHerrings', function (data) {
  	
- 	var fishbowl;
 	//To prevent it from loading twice
 	if(fishbowl == undefined){
 		//Must make context first, to send in to fishbowl
