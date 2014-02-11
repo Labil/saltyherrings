@@ -15,6 +15,7 @@
 //		- Remake design of popup info
 //		- Refactor code
 //		- Change graphics of selected to an outline
+//		- Bug with DB on heroku. Takes forever for inserts to be registered it seems
 
 var setupRenderContext = function(){
 	canvas = document.createElement("canvas");
