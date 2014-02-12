@@ -11,9 +11,10 @@
 //		  informs the user if they have chosen an invalid name
 //		- Add cookies to remember user and prevent them from adding > 1 herring
 //		- Display stats about what country the herrings are from. etc
-//		- Add more properties fro the herrings
+//		- Add more properties for the herrings
 //		- Remake design of popup info
 //		- Refactor code
+//		- get rid of html inside js
 //		- Change graphics of selected to an outline
 //		- Bug with DB on heroku. Takes forever for inserts to be registered it seems
 
@@ -77,16 +78,27 @@ var deselectHerring = function(){
 
 var displayInfo = function(herring){
 	var popup = $('#popup');
+	//trims whitespaces
+	var template = $.trim($('#displayInfo').html());
 	var searchfield = $('#searchfield');
+
+	//i flags both upper- and lowercase, g = global, means it will continue
+	//searching even if it finds one instance of the search
+	//I think since I am using another templating engine (swig), it is
+	//messing up when I try to use {{}} around the names. Now it's just
+	//searching for /number/ and not /{{number}}/ and I removed the i to just
+	//match on exact case.
+	var temp = template.replace(/number/g, herring.number)
+		               .replace(/name/g, herring.name)
+		    		   .replace(/created/g, herring.date)
+		    		   .replace(/city/g, herring.city)
+		    		   .replace(/property/g, herring.property);
+	popup.html(temp);
+
 	if(popup.is(':hidden')){
 		searchfield.hide();
 		popup.fadeIn(200);
 	}
-	popup.html("<p>Herring  #" + herring.number + "</p>"
-		 + "<p>Name: " + herring.name + "</p>"
-		 + "<p>Created: " + herring.date + "</p>"
-		 + "<p>City of origin: " + herring.city + "</p>"
-		 + "<p>Property: " + herring.property + "</p>");
 };
 
 var hideInfo = function(){
