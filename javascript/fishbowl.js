@@ -89,9 +89,18 @@ Fishbowl.prototype.loadHerrings = function(herrings){
     }
 };
 
+Fishbowl.prototype.updateCanvasWidth = function(newWidth, newHeight){
+    this.canvasW = newWidth;
+    this.canvasH = newHeight;
+    for(var i = 0; i < this.herrings.length; i++){
+        this.herrings[i].updateCanvasWidth(newWidth);
+    }
+};
+
 Fishbowl.prototype.addHerring = function(herring, xpos, ypos){
     if(xpos == undefined) xpos = this.getRandomSpawnpoint(this.canvasW);
     if(ypos == undefined) ypos = this.getRandomSpawnpoint(this.canvasH);
+    //speed
     var rand = Math.random();
     if(rand <= 0.4) rand += 0.5;
     //157 and 60 is w & h of png. CBA to make variables.
@@ -99,6 +108,7 @@ Fishbowl.prototype.addHerring = function(herring, xpos, ypos){
     var hH = 60 * rand;
     var hX = xpos - hW / 2;
     var hY = ypos - hH / 2; 
+    rand*=2;
     //Saves an array of the herring names to be used for searching
     this.herringNames.push(herring.name);
     this.herrings.push(new Herring(herring, hX, hY, rand, hW, hH, this.canvasW));

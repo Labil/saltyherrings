@@ -12,6 +12,7 @@ var Herring = function(herring, xPos, yPos, speed, w, h, canvasW) {
     this.number = herring.number;
     this.date = herring.date;
     this.city = herring.city;
+    this.justResized = false;
 
     //Set initial flipout to 2 so that if the fish is spawned 
     //near the edge it won't flip around and swim the wrong way
@@ -20,6 +21,11 @@ var Herring = function(herring, xPos, yPos, speed, w, h, canvasW) {
     var halfW = canvasW / 2;
     if(xPos <= halfW) this.speed = speed;
     else this.speed = -speed;
+};
+
+Herring.prototype.updateCanvasWidth = function(newWidth){
+    this.canvasW = newWidth;
+    this.justResized = true;
 };
 
 Herring.prototype.select = function(){
@@ -64,4 +70,12 @@ Herring.prototype.swim = function(){
     }
     else this.flipTimeout -= 0.01;
     this.xPos += this.speed;
+
+    if(this.justResized){
+        if(this.xPos > this.canvasW){
+            console.log("My pos is over the width of the canvas");
+            this.xPos = this.canvasW - 100; //Canters the fish in the center;
+        }
+    }
+    
 };
