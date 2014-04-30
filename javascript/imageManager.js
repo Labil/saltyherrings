@@ -14,11 +14,11 @@ ImageManager.prototype.load = function(paths, names, callback){
         console.log("Loading just one image.");
 
     }*/
-    console.log("Names array length: " + names.length);
+  //  console.log("Names array length: " + names.length);
 
     var alreadyLoaded = function(name){
     	if(this.library[name]){
-    		console.log("Image with name: " + name + " already exists.");
+    	//	console.log("Image with name: " + name + " already exists.");
     		return true;
     	}
     	else{
@@ -30,7 +30,7 @@ ImageManager.prototype.load = function(paths, names, callback){
         if(!alreadyLoaded(imgName)){
         	var img = new Image();
         	img.onload = function() {
-        	    console.log("Loaded image named " + imgName);
+        	 //   console.log("Loaded image named " + imgName);
         	    cb(imgName, img);
         	};
         	img.src = imgPath;
@@ -48,7 +48,7 @@ ImageManager.prototype.load = function(paths, names, callback){
             imgLoadCount++;
 
             if(imgLoadCount >= paths.length){
-                console.log("Done loading images!");
+            //    console.log("Done loading images!");
                 callback();
             }
         });  
@@ -61,7 +61,7 @@ ImageManager.prototype.getImage = function(name){
 		return this.library[name];
 	}
 	else{
-		console.log("The image of name: " + name + " doesn't exist yet.");
+		//console.log("The image of name: " + name + " doesn't exist yet.");
 		return null;
 	}
 };

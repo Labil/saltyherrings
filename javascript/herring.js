@@ -73,9 +73,10 @@ Herring.prototype.swim = function(){
 
     if(this.justResized){
         if(this.xPos > this.canvasW){
-            console.log("My pos is over the width of the canvas");
-            this.xPos = this.canvasW - 100; //Canters the fish in the center;
+            //console.log("My pos is over the width of the canvas");
+            this.xPos = this.canvasW - 300; //moves the fish back inside the canvas;
         }
+        this.justResized = false;
     }
     
 };

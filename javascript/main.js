@@ -26,7 +26,6 @@ var Main = function(){
 Main.prototype.setupWindowResize = function(){
 	var self = this;
 	$(window).on('resize', function(){
-		console.log(self.canvas);
 		self.canvas.width = $(window).innerWidth();
 		self.canvas.height = $(window).innerHeight() - 60;
 
@@ -35,7 +34,6 @@ Main.prototype.setupWindowResize = function(){
 };
 
 Main.prototype.init = function(config){
-	console.log("init");
 	this.popup = config.popup;
 	//trims whitespaces
 	this.template = $.trim(config.displayInfo.html());
@@ -67,7 +65,6 @@ Main.prototype.setupEventListeners = function(herrings){
 	//window.addEventListener("mousedown"
 	var self = this;
 	$(window).on('click', function(e){
-		console.log('click');
 		var hit = false;
 		for(var i = 0; i < herrings.length; i++){
 			var hW = herrings[i].w;
@@ -176,6 +173,7 @@ Main.prototype.initAddHerring = function(fishbowl){
 		e.preventDefault();
 
 		var name = self.nameInput.val();
+
 		//Getting users location! Doesn't require permission
 		$.get("http://ipinfo.io", function (response) {
 			if(response.city == null || response.city =="") response.city = "Top Secret Location";
@@ -228,9 +226,7 @@ var fishbowl;
 var socket = io.connect(window.location.hostname);
 
 $(function() {
-    console.log( "ready!" );
     if(main == undefined){
-    	console.log("creating main");
     	var main = new Main();
     	main.init({
     		'popup': $('#popup'),
@@ -249,7 +245,7 @@ $(function() {
     	//To prevent it from loading twice
     	if(fishbowl == undefined){
     		
-    		var imgPaths = ["assets/salty1.png", "assets/salty2.png", "assets/salty1_selected.png", "assets/salty2_selected.png"];
+    		var imgPaths = ["assets/salty1.png", "assets/salty2.png", "assets/herring_right_selected.png", "assets/herring_left_selected.png"];
     		var imgNames = ["Herring", "Herring_left", "Herring_sel", "Herring_left_sel"];
     		fishbowl = new Fishbowl(main.canvas.width, main.canvas.height, main.context, data, imgPaths, imgNames);
 

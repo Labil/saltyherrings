@@ -41,19 +41,21 @@ h1{
 #bowl{
     width:100%;
     position: absolute;
+    top:20px;
     background-color: blue;
 }
 
 #popup{
     position: absolute;
-    width: 20%;
+    min-width: 300px;
+    width: auto;
     min-height: 200px;
-    /*background-color: rgba(1.0, 1.0, 1.0, 0.5);*/
     background-color: white;
     right: 20px;
     top: 20px;
-    padding:10px;
-    border: 1px solid gray;
+    padding:25px;
+    border: 2px solid gray;
+    border-radius: 6px;
     text-align: center;
     display: none;
 }
@@ -76,8 +78,9 @@ h1{
     font-size: 20px;
 }
 
-a{
+a.logo{
     text-decoration: none;
+    color: #181818;
 }
 
 #footer{
@@ -87,10 +90,30 @@ a{
     left: 0; 
     margin:0;
     padding-right:50px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     font-family: "ClearLine";
+    color: #181818;
     text-align: right;
     font-size: 2.5em;
+    border-bottom: 10px solid #00bdff;
+}
+
+p.title{
+    padding: 0;
+    margin: 0;
+    font-family: 'Porky';
+}
+
+#header{
+    position: fixed;
+    background-color: transparent;
+    width: 100%;
+    height: 20px;
+    padding: 5px;
+    margin-top: 0px;
+    z-index: 1;
+    text-align: center;
+    border-top: 4px solid #00bdff;
 }
 
 /* Close button on form */
@@ -117,6 +140,13 @@ a{
 }
 
 @font-face {
-  font-family: "ClearLine";
-  src: url("ClearLine.ttf");
+  font-family: 'Porky';
+  src: url('../assets/fonts/porky.woff') format('woff'),
+       url('../assets/fonts/porky.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'ClearLine';
+  src: url('../assets/fonts/ClearLine.woff') format('woff'),
+       url('../assets/fonts/ClearLine.ttf') format('truetype');
 }
