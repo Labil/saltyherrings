@@ -173,7 +173,6 @@ Main.prototype.initAddHerring = function(fishbowl){
 		e.preventDefault();
 
 		var name = self.nameInput.val();
-
 		//Getting users location! Doesn't require permission
 		$.get("http://ipinfo.io", function (response) {
 			if(response.city == null || response.city =="") response.city = "Top Secret Location";
